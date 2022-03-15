@@ -1,0 +1,39 @@
+{
+  "name": "codingthecurbs",
+  "version": "0.0.1",
+  "description": "It's an API for Coding the Curbs that holds info on smartzone's in Holland.",
+  "main": "main.js",
+  "scripts": {
+    "start": "./bin/www",
+    "test": "mocha && standard --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fdnd-apis/tribe"
+  },
+  "keywords": [
+    "node",
+    "json",
+    "api"
+  ],
+  "author": "Justus Sturkenboom <justus@ju5tu5.nl>",
+  "contributors": [
+    "Joost Faber <j.faber@hva.nl>"
+  ],
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/fdnd-apis/tribe/issues"
+  },
+  "homepage": "https://github.com/fdnd-apis/tribe#readme",
+  "dependencies": {
+    "dotenv": "^14.2.0",
+    "express": "^4.17.2",
+    "mysql2": "^2.3.3"
+  },
+  "standard": {
+    "ignore": [
+      "/test/"
+    ]
+  },
+  "devDependencies": {}
+}
