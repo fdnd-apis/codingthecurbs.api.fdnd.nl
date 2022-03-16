@@ -18,7 +18,7 @@ module.exports = express
   // List ALL smartzones
   .get('/', async (req, res, next) => {
     try {
-      res.json(await Smartzone.getAll(req.query.page))
+      res.json(await Smartzone.get(req.query.page))
     } catch (err) {
       console.error('Error while getting smartzones: ', err.message)
       next(err)
