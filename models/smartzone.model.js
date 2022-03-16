@@ -92,7 +92,7 @@ smartzone.put = async function (smartzone) {
  * @returns
  */
 smartzone.patch = async function (smartzone) {
-  console.log(`PATCH called with ${smartzone}`)
+  console.log(`PATCH called with ${smartzone.smartzoneId}`)
   console.log(prepareForPatchQuery(smartzone))
   console.log(prepareForPatch(smartzone))
   /*
@@ -185,6 +185,7 @@ function prepareForPatchQuery(smartzone) {
  */
 function prepareForPatch(smartzone) {
   const id = smartzone.smartzoneId
+  console.log(smartzone)
   delete smartzone.smartzoneId
   return [...Object.values(smartzone), id]
 }
