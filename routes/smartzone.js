@@ -12,7 +12,7 @@ module.exports = express
     } catch (err) {
       res.json({
         message: `Error while adding smartzone: ${err.message}`,
-        request: req,
+        request: req.body,
       })
     }
   })
@@ -24,7 +24,7 @@ module.exports = express
     } catch (err) {
       res.json({
         message: `Error while getting smartzone: ${err.message}`,
-        request: req,
+        request: req.body,
       })
     }
   })

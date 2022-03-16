@@ -7,6 +7,7 @@ const helper = require('./helper')
  * @param {*} smartzone an object containing the necessary fields to make a new smartzone
  */
 const smartzone = function (smartzone) {
+  console.log('SZ model constructor!')
   // TODO: Check for sanity...
   this.smartzoneId = smartzone.smartzoneId
   this.name = smartzone.name
@@ -57,6 +58,7 @@ smartzone.getById = async function (smartzoneId) {
  * @returns an object containing the inserted smartzone with the newly inserted smartzoneId
  */
 smartzone.post = async function (smartzone) {
+  console.log('SZ model post!')
   const rows = await db.query(
     `INSERT INTO smartzone SET name = ?, town = ?, location = ?, function = ?, time = ?, size = ?, usage = ?, description = ?, image`,
     prepareForInsert(smartzone)
