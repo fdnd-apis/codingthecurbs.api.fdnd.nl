@@ -173,9 +173,8 @@ function prepareForPut(smartzone) {
  */
 function prepareForPatchQuery(smartzone) {
   delete smartzone.smartzoneId
-  console.log(smartzone)
-  console.log(Object.getOwnPropertyNames(smartzone))
-  return smartzone.getOwnPropertyNames.reduce((prev, curr) => `${prev}, ${curr} = ?`)
+  console.log(Object.getOwnPropertyNames(smartzone).reduce((prev, curr) => `${prev}, ${curr} = ?`))
+  return Object.getOwnPropertyNames(smartzone).reduce((prev, curr) => `${prev}, ${curr} = ?`)
 }
 
 /**
