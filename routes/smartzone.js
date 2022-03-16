@@ -43,7 +43,7 @@ module.exports = express
   // Patch a smartzone
   .patch('/', async (req, res, next) => {
     try {
-      res.json(await Smartzone.patch(new Smartzone(req.body)))
+      res.json(await Smartzone.patch(req.body))
     } catch (err) {
       res.json({
         message: `Error while patching smartzone: ${err.message}`,
