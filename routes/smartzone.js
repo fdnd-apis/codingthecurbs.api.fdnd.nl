@@ -5,23 +5,27 @@ module.exports = express
   .Router()
 
   // Add a new smartzone
-  // .post('/', async (req, res, next) => {
-  //   try {
-  //     console.log('Got: ', req.body)
-  //     res.json(await Smartzone.create(new Smartzone(req.body)))
-  //   } catch (err) {
-  //     console.error('Error while adding smartzone: ', err.message)
-  //     next(err)
-  //   }
-  // })
+  .post('/', async (req, res, next) => {
+    try {
+      console.log('Got: ', req.body)
+      res.json(await Smartzone.create(new Smartzone(req.body)))
+    } catch (err) {
+      res.json({
+        message: `Error while adding smartzone: ${err.message}`,
+        request: req,
+      })
+    }
+  })
 
   // List ALL smartzones
   .get('/', async (req, res, next) => {
     try {
       res.json(await Smartzone.get(req.query.page))
     } catch (err) {
-      console.error('Error while getting smartzones: ', err.message)
-      next(err)
+      res.json({
+        message: `Error while getting smartzone: ${err.message}`,
+        request: req,
+      })
     }
   })
 

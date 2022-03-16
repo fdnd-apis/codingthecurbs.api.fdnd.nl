@@ -58,7 +58,7 @@ smartzone.getById = async function (smartzoneId) {
  */
 smartzone.post = async function (smartzone) {
   const rows = await db.query(
-    `INSERT INTO smartzone SET field = ?, otherField = ?`,
+    `INSERT INTO smartzone SET name = ?, town = ?, location = ?, function = ?, time = ?, size = ?, usage = ?, description = ?, image`,
     prepareForInsert(smartzone)
   )
   smartzone.smartzoneId = rows.insertId
@@ -71,8 +71,8 @@ smartzone.post = async function (smartzone) {
 }
 
 /**
- *
- * @param {*} smartzone
+ * Patch a smartzone in the database
+ * @param {*} smartzone a smartzone object containing at least the smartzoneId and one other field.
  * @returns
  */
 smartzone.patch = async function (smartzone) {
@@ -124,7 +124,17 @@ module.exports = smartzone
  * @returns [] an array to be used in the insert query
  */
 function prepareForInsert(smartzone) {
-  return [smartzone.field, smartzone.otherField]
+  return [
+    smartzone.name,
+    smartzone.town,
+    smartzone.location,
+    smartzone.function,
+    smartzone.time,
+    smartzone.size,
+    smartzone.usage,
+    smartzone.description,
+    smartzone.image,
+  ]
 }
 
 /**
