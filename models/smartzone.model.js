@@ -92,6 +92,10 @@ smartzone.put = async function (smartzone) {
  * @returns
  */
 smartzone.patch = async function (smartzone) {
+  console.log(`PATCH called with ${smartzone}`)
+  console.log(prepareForPatchQuery(smartzone))
+  console.log(prepareForPatch(smartzone))
+  /*
   const rows = await db.query(
     `UPDATE smartzone SET ${prepareForPatchQuery(smartzone)} WHERE smartzoneId = ?`,
     prepareForPatch(smartzone)
@@ -99,6 +103,10 @@ smartzone.patch = async function (smartzone) {
   return {
     data: {},
     meta: helper.emptyOrRows(rows),
+  }
+  */
+  return {
+    message: 'Testing PATCH, pls use journal..',
   }
 }
 
