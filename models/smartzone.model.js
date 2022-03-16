@@ -15,7 +15,7 @@ const smartzone = function (smartzone) {
   this.function = smartzone.function
   this.time = smartzone.time
   this.size = smartzone.size
-  this.purpose = smartzone.purpose
+  this.utilization = smartzone.utilization
   this.description = smartzone.description
   this.image = smartzone.image
 }
@@ -57,12 +57,8 @@ smartzone.getById = async function (smartzoneId) {
  * @returns an object containing the inserted smartzone with the newly inserted smartzoneId
  */
 smartzone.post = async function (smartzone) {
-  console.log(
-    `INSERT INTO smartzone SET name = ?, town = ?, location = ?, function = ?, time = ?, size = ?, purpose = ?, description = ?, image`,
-    prepareForInsert(smartzone)
-  )
   const rows = await db.query(
-    `INSERT INTO smartzone SET name = ?, town = ?, location = ?, function = ?, time = ?, size = ?, purpose = ?, description = ?, image`,
+    `INSERT INTO smartzone SET name = ?, town = ?, location = ?, function = ?, time = ?, size = ?, utilization = ?, description = ?, image`,
     prepareForInsert(smartzone)
   )
   smartzone.smartzoneId = rows.insertId
@@ -135,7 +131,7 @@ function prepareForInsert(smartzone) {
     smartzone.function,
     smartzone.time,
     smartzone.size,
-    smartzone.purpose,
+    smartzone.utilization,
     smartzone.description,
     smartzone.image,
   ]
