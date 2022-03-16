@@ -7,8 +7,7 @@ module.exports = express
   // Add a new smartzone
   .post('/', async (req, res, next) => {
     try {
-      console.log('Got: ', req.body)
-      res.json(await Smartzone.create(new Smartzone(req.body)))
+      res.json(await Smartzone.post(new Smartzone(req.body)))
     } catch (err) {
       res.json({
         message: `Error while adding smartzone: ${err.message}`,
