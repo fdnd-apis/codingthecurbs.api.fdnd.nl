@@ -81,8 +81,8 @@ smartzone.put = async function (smartzone) {
     prepareForPut(smartzone)
   )
   return {
-    data: helper.emptyOrRows(rows),
-    meta: {},
+    data: {},
+    meta: rows.data,
   }
 }
 
