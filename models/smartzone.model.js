@@ -172,6 +172,7 @@ function prepareForPut(smartzone) {
  * @returns
  */
 function prepareForPatchQuery(smartzone) {
+  console.log('here!')
   delete smartzone.smartzoneId
   return smartzone.getOwnPropertyNames.reduce((prev, curr) => `${prev}, ${curr} = ?`)
 }
