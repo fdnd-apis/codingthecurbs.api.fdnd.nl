@@ -92,7 +92,7 @@ smartzone.put = async function (smartzone) {
  * @returns
  */
 smartzone.patch = async function (smartzone) {
-  console.log(`PATCH called with ${...smartzone}`)
+  console.log(`PATCH called with ${smartzone}`)
   console.log(prepareForPatchQuery(smartzone))
   console.log(prepareForPatch(smartzone))
   /*
