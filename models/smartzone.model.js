@@ -97,8 +97,8 @@ smartzone.patch = async function (smartzone) {
     prepareForPut(smartzone)
   )
   return {
-    data: helper.emptyOrRows(rows),
-    meta: {},
+    data: {},
+    meta: helper.emptyOrRows(rows),
   }
 }
 
@@ -110,8 +110,8 @@ smartzone.patch = async function (smartzone) {
 smartzone.delete = async function (smartzoneId) {
   const rows = await db.query(`DELETE FROM smartzone WHERE smartzoneId = ?`, [smartzoneId])
   return {
-    data: helper.emptyOrRows(rows),
-    meta: {},
+    data: {},
+    meta: helper.emptyOrRows(rows),
   }
 }
 

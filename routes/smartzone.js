@@ -4,7 +4,7 @@ const Smartzone = require('../models/smartzone.model')
 module.exports = express
   .Router()
 
-  // Add a new smartzone
+  // Post a new smartzone
   .post('/', async (req, res, next) => {
     try {
       res.json(await Smartzone.post(new Smartzone(req.body)))
@@ -16,7 +16,7 @@ module.exports = express
     }
   })
 
-  // List ALL smartzones
+  // Get all smartzones
   .get('/', async (req, res, next) => {
     try {
       res.json(await Smartzone.get(req.query.page))
@@ -28,6 +28,7 @@ module.exports = express
     }
   })
 
+  // Put a smartzone
   .put('/', async (req, res, next) => {
     try {
       res.json(await Smartzone.put(new Smartzone(req.body)))
@@ -35,6 +36,20 @@ module.exports = express
       res.json({
         message: `Error while putting smartzone: ${err.message}`,
         request: req.body,
+      })
+    }
+  })
+
+  // patch?
+
+  // Delete a smartzone
+  .delete(['/', '/:id'], async (req, res, next) => {
+    try {
+      res.json(await Smartzone.delete(req.params.id || req.body.smartzoneId)
+    } catch (err) {
+      res.json({
+        message: `Error while deleting smartzone: ${err.message}`,
+        request: `You tried to delete smartzoneId: ${req.params.id || req.body.smartzoneId}`,
       })
     }
   })
