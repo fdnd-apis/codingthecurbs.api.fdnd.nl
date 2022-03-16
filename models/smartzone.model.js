@@ -58,7 +58,7 @@ smartzone.getById = async function (smartzoneId) {
  */
 smartzone.post = async function (smartzone) {
   const rows = await db.query(
-    `INSERT INTO smartzone SET name = ?, town = ?, location = ?, function = ?, time = ?, size = ?, utilization = ?, description = ?, image`,
+    `INSERT INTO smartzone SET name = ?, town = ?, location = ?, function = ?, time = ?, size = ?, utilization = ?, description = ?, image = ?`,
     prepareForInsert(smartzone)
   )
   smartzone.smartzoneId = rows.insertId
