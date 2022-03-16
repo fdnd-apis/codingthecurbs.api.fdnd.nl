@@ -82,7 +82,7 @@ smartzone.put = async function (smartzone) {
   )
   return {
     data: {},
-    meta: rows.data,
+    meta: helper.emptyOrRows(rows),
   }
 }
 
