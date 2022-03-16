@@ -45,7 +45,7 @@ module.exports = express
   // Delete a smartzone
   .delete(['/', '/:id'], async (req, res, next) => {
     try {
-      res.json(await Smartzone.delete(req.params.id || req.body.smartzoneId)
+      res.json(await Smartzone.delete(req.params.id || req.body.smartzoneId))
     } catch (err) {
       res.json({
         message: `Error while deleting smartzone: ${err.message}`,
