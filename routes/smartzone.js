@@ -10,7 +10,7 @@ module.exports = express
       res.json(await Smartzone.post(new Smartzone(req.body)))
     } catch (err) {
       res.json({
-        message: `Error while adding smartzone: ${err.message}`,
+        message: `Error while posting smartzone: ${err.message}`,
         request: req.body,
       })
     }
@@ -28,14 +28,13 @@ module.exports = express
     }
   })
 
-// TODO
-// .get('/v1/:searchString', async (req, res, next) => {})
-// .get('/v1/quotes/length/asc', async (req, res, next) => {})
-// .get('/v1/quotes/length/desc', async (req, res, next) => {})
-// .get('/v1/quotes/alphabetical/asc', async (req, res, next) => {})
-// .get('/v1/quotes/alphabetical/desc', async (req, res, next) => {})
-
-// Make quotes like this:
-// Table: quote Columns: quoteId, smartzoneId, text
-// Table: tag Columns: tagId, text
-// Table: itemTag Columns: quoteId, tagId
+  .put('/', async (req, res, next) => {
+    try {
+      res.json(await Smartzone.put(new Smartzone(req.body)))
+    } catch (err) {
+      res.json({
+        message: `Error while putting smartzone: ${err.message}`,
+        request: req.body,
+      })
+    }
+  })

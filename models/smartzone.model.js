@@ -71,14 +71,14 @@ smartzone.post = async function (smartzone) {
 }
 
 /**
- * Patch a smartzone in the database
- * @param {*} smartzone a smartzone object containing at least the smartzoneId and one other field.
+ * Update a smartzone in the database using put (pass the whole object)
+ * @param {*} smartzone a complete smartzone object with the applied changes
  * @returns
  */
-smartzone.patch = async function (smartzone) {
+smartzone.put = async function (smartzone) {
   const rows = await db.query(
-    `UPDATE smartzone SET ${prepareForPatchQuery(smartzone)} WHERE smartzoneId = ?`,
-    prepareForPatch(smartzone)
+    `UPDATE smartzone SET name = ?, town = ?, location = ?, function = ?, time = ?, size = ?, utilization = ?, description = ?, image = ? WHERE smartzoneId = ?`,
+    prepareForPut(smartzone)
   )
   return {
     data: helper.emptyOrRows(rows),
@@ -87,14 +87,14 @@ smartzone.patch = async function (smartzone) {
 }
 
 /**
- *
- * @param {*} smartzone
+ * Patch a smartzone in the database
+ * @param {*} smartzone a smartzone object containing at least the smartzoneId and one other field.
  * @returns
  */
-smartzone.put = async function (smartzone) {
+smartzone.patch = async function (smartzone) {
   const rows = await db.query(
-    `UPDATE smartzone SET field = ?, otherField = ? WHERE smartzoneId = ?`,
-    prepareForPatch(smartzone)
+    `UPDATE smartzone SET ${prepareForPatchQuery(smartzone)} WHERE smartzoneId = ?`,
+    prepareForPut(smartzone)
   )
   return {
     data: helper.emptyOrRows(rows),
@@ -134,6 +134,27 @@ function prepareForInsert(smartzone) {
     smartzone.utilization,
     smartzone.description,
     smartzone.image,
+  ]
+}
+
+/**
+ * Prepares a passed smartzone object for update using the REST put method. It's
+ * mostly an order thing as the update query expects an array with a certain order.
+ * @param {*} smartzone a smartzone object created with the smartzone constructor
+ * @returns [] an array to be used in the update query
+ */
+function prepareForPut(smartzone) {
+  return [
+    smartzone.name,
+    smartzone.town,
+    smartzone.location,
+    smartzone.function,
+    smartzone.time,
+    smartzone.size,
+    smartzone.utilization,
+    smartzone.description,
+    smartzone.image,
+    smartzone.smartzoneId,
   ]
 }
 
