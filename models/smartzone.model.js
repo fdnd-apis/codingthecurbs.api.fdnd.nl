@@ -94,7 +94,7 @@ smartzone.put = async function (smartzone) {
 smartzone.patch = async function (smartzone) {
   const rows = await db.query(
     `UPDATE smartzone SET ${prepareForPatchQuery(smartzone)} WHERE smartzoneId = ?`,
-    prepareForPut(smartzone)
+    prepareForPatch(smartzone)
   )
   return {
     data: {},

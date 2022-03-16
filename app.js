@@ -1,6 +1,5 @@
 require('dotenv').config()
 const express = require('express')
-
 const indexRoute = require('./routes/index')
 const smartzoneRoute = require('./routes/smartzone')
 const errorRoute = require('./routes/error')

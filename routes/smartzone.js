@@ -40,7 +40,17 @@ module.exports = express
     }
   })
 
-  // patch?
+  // Patch a smartzone
+  .patch('/', async (req, res, next) => {
+    try {
+      res.json(await Smartzone.patch(new Smartzone(req.body)))
+    } catch (err) {
+      res.json({
+        message: `Error while patching smartzone: ${err.message}`,
+        request: req.body,
+      })
+    }
+  })
 
   // Delete a smartzone
   .delete(['/', '/:id'], async (req, res, next) => {
