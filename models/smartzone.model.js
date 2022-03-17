@@ -24,7 +24,7 @@ const smartzone = function (smartzone) {
  * Get all smartzones from the database, will be paginated if the number of
  * smartzones in the database exceeds process.env.LIST_PER_PAGE
  * @param {*} page the page of authors you want to get
- * @returns
+ * @returns an object containing the requested data and some meta information
  */
 smartzone.get = async function (page = 1) {
   const rows = await db.query(`SELECT * FROM smartzone LIMIT ?,?`, [
@@ -39,9 +39,9 @@ smartzone.get = async function (page = 1) {
 }
 
 /**
- *
- * @param {*} smartzoneId
- * @returns
+ * Get a specific smartzone from the database
+ * @param {*} smartzoneId the id of the smartzone to return
+ * @returns an object containing the requested data and some meta information
  */
 smartzone.getById = async function (smartzoneId) {
   const rows = await db.query(`SELECT * FROM smartzone WHERE smartzoneId = ?`, [smartzoneId])
@@ -92,10 +92,6 @@ smartzone.put = async function (smartzone) {
  * @returns
  */
 smartzone.patch = async function (smartzone) {
-  console.log(`PATCH called with ${smartzone.smartzoneId}`)
-  console.log(prepareForPatchQuery(smartzone))
-  console.log(prepareForPatch(smartzone))
-  /*
   const rows = await db.query(
     `UPDATE smartzone SET ${prepareForPatchQuery(smartzone)} WHERE smartzoneId = ?`,
     prepareForPatch(smartzone)
@@ -104,15 +100,11 @@ smartzone.patch = async function (smartzone) {
     data: {},
     meta: helper.emptyOrRows(rows),
   }
-  */
-  return {
-    message: 'Testing PATCH, pls use journal..',
-  }
 }
 
 /**
- *
- * @param {*} smartzoneId
+ * Remove a smartzone from the database
+ * @param {*} smartzoneId the id of the smartzone to delete
  * @returns
  */
 smartzone.delete = async function (smartzoneId) {
@@ -167,27 +159,24 @@ function prepareForPut(smartzone) {
 }
 
 /**
- *
- * @param {*} smartzone
- * @returns
+ * Prepares part of an SQL query based on a passed partial smartzone object
+ * @param {*} smartzone partial smartzone object containing at least the smartzoneId
+ * @returns a string to be used in the patch query, eg 'field = ?, field2 = ? ...'
  */
 function prepareForPatchQuery(smartzone) {
-  console.log('PFPQ Pre delete: ' + Object.getOwnPropertyNames(smartzone))
-  delete smartzone.smartzoneId // has side effect
-  console.log('PFPQ Post delete: ' + Object.getOwnPropertyNames(smartzone))
-  return Object.getOwnPropertyNames(smartzone)
+  return Object.keys(smartzone)
+    .filter((field) => field != 'smartzoneId')
     .map((field) => `${field} = ?`)
     .reduce((prev, curr) => `${prev}, ${curr}`)
 }
 
 /**
- *
- * @param {*} smartzone
- * @returns
+ * Prepares a passed partial smartzone object for update using the REST patch
+ * method. Whatever fields are passed, the smartzoneId needs to be at the end.
+ * @param {*} smartzone partial smartzone object containing at least the smartzoneId
+ * @returns [] an array to be used in the patch query
  */
 function prepareForPatch(smartzone) {
-  const id = smartzone.smartzoneId
-  console.log('PFP: ' + Object.getOwnPropertyNames(smartzone))
-  // delete smartzone.smartzoneId
-  return [...Object.values(smartzone), id]
+  const { smartzoneId, ...preparedSmartzone } = smartzone
+  return [...Object.values(preparedSmartzone), smartzoneId]
 }
