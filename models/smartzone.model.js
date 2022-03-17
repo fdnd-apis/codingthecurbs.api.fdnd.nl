@@ -172,9 +172,9 @@ function prepareForPut(smartzone) {
  * @returns
  */
 function prepareForPatchQuery(smartzone) {
-  console.log('PFPQ Pre delete: ' + smartzone)
+  console.log('PFPQ Pre delete: ' + Object.getOwnPropertyNames(smartzone))
   delete smartzone.smartzoneId // has side effect
-  console.log('PFPQ Post delete: ' + smartzone)
+  console.log('PFPQ Post delete: ' + Object.getOwnPropertyNames(smartzone))
   return Object.getOwnPropertyNames(smartzone)
     .map((field) => `${field} = ?`)
     .reduce((prev, curr) => `${prev}, ${curr}`)
@@ -187,7 +187,7 @@ function prepareForPatchQuery(smartzone) {
  */
 function prepareForPatch(smartzone) {
   const id = smartzone.smartzoneId
-  console.log('PFP: ' + smartzone)
+  console.log('PFP: ' + Object.getOwnPropertyNames(smartzone))
   // delete smartzone.smartzoneId
   return [...Object.values(smartzone), id]
 }
