@@ -58,8 +58,8 @@ smartzone.getById = async function (smartzoneId) {
  */
 smartzone.post = async function (smartzone) {
   const rows = await db.query(
-    `INSERT INTO smartzone SET name = ?, town = ?, location = ?, function = ?, time = ?, size = ?, utilization = ?, description = ?, image = ?`,
-    prepareForInsert(smartzone)
+    `INSERT INTO smartzone SET ${prepareQuery(smartzone)}`,
+    prepareParams(smartzone)
   )
   smartzone.smartzoneId = rows.insertId
   return {
@@ -77,8 +77,8 @@ smartzone.post = async function (smartzone) {
  */
 smartzone.put = async function (smartzone) {
   const rows = await db.query(
-    `UPDATE smartzone SET name = ?, town = ?, location = ?, function = ?, time = ?, size = ?, utilization = ?, description = ?, image = ? WHERE smartzoneId = ?`,
-    prepareForPut(smartzone)
+    `UPDATE smartzone SET ${prepareQuery(smartzone)} WHERE smartzoneId = ?`,
+    prepareParams(smartzone)
   )
   return {
     data: {},
@@ -93,8 +93,8 @@ smartzone.put = async function (smartzone) {
  */
 smartzone.patch = async function (smartzone) {
   const rows = await db.query(
-    `UPDATE smartzone SET ${prepareForPatchQuery(smartzone)} WHERE smartzoneId = ?`,
-    prepareForPatch(smartzone)
+    `UPDATE smartzone SET ${prepareQuery(smartzone)} WHERE smartzoneId = ?`,
+    prepareParams(smartzone)
   )
   return {
     data: {},
@@ -118,52 +118,11 @@ smartzone.delete = async function (smartzoneId) {
 module.exports = smartzone
 
 /**
- * Prepares a passed smartzone object for insertion in the db, it's mostly an order
- * thing as the insert query expects an array with a certain order.
- * @param {*} smartzone a new smartzone object created with the smartzone constructor
- * @returns [] an array to be used in the insert query
- */
-function prepareForInsert(smartzone) {
-  return [
-    smartzone.name,
-    smartzone.town,
-    smartzone.location,
-    smartzone.function,
-    smartzone.time,
-    smartzone.size,
-    smartzone.utilization,
-    smartzone.description,
-    smartzone.image,
-  ]
-}
-
-/**
- * Prepares a passed smartzone object for update using the REST put method. It's
- * mostly an order thing as the update query expects an array with a certain order.
- * @param {*} smartzone a smartzone object created with the smartzone constructor
- * @returns [] an array to be used in the update query
- */
-function prepareForPut(smartzone) {
-  return [
-    smartzone.name,
-    smartzone.town,
-    smartzone.location,
-    smartzone.function,
-    smartzone.time,
-    smartzone.size,
-    smartzone.utilization,
-    smartzone.description,
-    smartzone.image,
-    smartzone.smartzoneId,
-  ]
-}
-
-/**
  * Prepares part of an SQL query based on a passed partial smartzone object
  * @param {*} smartzone partial smartzone object containing at least the smartzoneId
  * @returns a string to be used in the patch query, eg 'field = ?, field2 = ? ...'
  */
-function prepareForPatchQuery(smartzone) {
+function prepareQuery(smartzone) {
   return Object.keys(smartzone)
     .filter((field) => field != 'smartzoneId')
     .map((field) => `${field} = ?`)
@@ -171,12 +130,12 @@ function prepareForPatchQuery(smartzone) {
 }
 
 /**
- * Prepares a passed partial smartzone object for update using the REST patch
- * method. Whatever fields are passed, the smartzoneId needs to be at the end.
+ * Prepares a passed partial smartzone object for querying the database. Whatever
+ * fields are passed, the smartzoneId needs to be at the end.
  * @param {*} smartzone partial smartzone object containing at least the smartzoneId
  * @returns [] an array to be used in the patch query
  */
-function prepareForPatch(smartzone) {
+function prepareParams(smartzone) {
   const { smartzoneId, ...preparedSmartzone } = smartzone
   return [...Object.values(preparedSmartzone), smartzoneId]
 }
