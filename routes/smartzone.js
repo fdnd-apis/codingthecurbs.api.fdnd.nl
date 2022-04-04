@@ -28,6 +28,18 @@ module.exports = express
     }
   })
 
+  // Get a specific smartzone
+  .get('/:id', async (req, res, next) => {
+    try {
+      res.json(await Smartzone.getById(req.params.id))
+    } catch (err) {
+      res.json({
+        message: `Error while getting specific smartzone: ${err.message}`,
+        request: req.body,
+      })
+    }
+  })
+
   // Put a smartzone
   .put('/', async (req, res, next) => {
     try {
