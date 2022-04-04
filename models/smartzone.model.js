@@ -47,7 +47,7 @@ smartzone.getById = async function (smartzoneId) {
   const rows = await db.query(`SELECT * FROM smartzone WHERE smartzoneId = ?`, [smartzoneId])
   return {
     data: helper.emptyOrRows(rows),
-    meta: { page },
+    meta: {},
   }
 }
 
